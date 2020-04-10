@@ -2,6 +2,7 @@ package it.sisalpay.ticketservice.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.stereotype.Component;
 
@@ -11,7 +12,7 @@ import it.sisalpay.ticketservice.model.Ticket;
 public class TicketDAOImpl implements TicketDAO {
 
 	static int ticketCounter = 0;
-	static List<Ticket> tickets = new ArrayList<>();
+	static List<Ticket> tickets = new CopyOnWriteArrayList<>();
 	
 	@Override
 	public int createTicket(Ticket ticket) {

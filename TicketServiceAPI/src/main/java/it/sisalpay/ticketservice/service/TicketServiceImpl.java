@@ -14,11 +14,19 @@ public class TicketServiceImpl implements TicketService {
 	@Autowired
 	private TicketDAO dao;
 	
+	@Autowired
+	private TicketMessageProducer messageProducer;
+	
 	@Override
 	public int buyTicket(String passengerName, String phone) {		
 		Ticket ticket = new Ticket();
 		ticket.setPassengerName(passengerName);
 		ticket.setPhone(phone);
+		
+		// Invio la notifica sulla Coda
+		messageProducer.produceTicketMessage(ticket);
+		
+		// Persisto sul DAO
 		return dao.createTicket(ticket);
 	}
 
