@@ -18,7 +18,11 @@ public class TicketMessageProducer {
 		JmsTemplate jmsTemplate = context.getBean(JmsTemplate.class);
 	    // Send a message with a POJO - the template reuse the message converter
 	    System.out.println("Sending a ticket Notification.");
-	    jmsTemplate.convertAndSend("ticketQueue", ticket);
+	    try {
+	    	jmsTemplate.convertAndSend("ticketQueue", ticket);
+	    } catch (Exception e) {
+	    	System.out.println("Could not connect to JMS Broker.");
+	    }
 	}
 
 }
